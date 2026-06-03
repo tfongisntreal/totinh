@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>For Ngọc Anh 💙</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+/* ========= CHỈNH NHANH ========= */
+:root{
+  --blue-1:#dbeefe; --blue-2:#b9e0f2; --blue-3:#8ec7e6; --blue-deep:#5a93b8;
+  --beige-1:#fbf6ec; --beige-2:#f3e7d3; --sand:#e7d3b3;
+  --ink:#4a5a66; --ink-soft:#7d909c; --accent:#e58a9a; --accent-deep:#d76b81; --white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:'Quicksand',sans-serif;color:var(--ink);overflow:hidden;
+  background:linear-gradient(160deg,var(--blue-1) 0%,var(--beige-1) 55%,var(--beige-2) 100%);
+}
+#stage{position:fixed;inset:0;overflow:hidden;}
+.bg-heart{position:absolute;bottom:-40px;opacity:.35;animation:rise linear infinite;color:var(--blue-3);user-select:none;pointer-events:none;}
+@keyframes rise{0%{transform:translateY(0) rotate(0);opacity:0}10%,90%{opacity:.4}100%{transform:translateY(-110vh) rotate(360deg);opacity:0}}
+
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;opacity:0;pointer-events:none;transition:opacity .7s ease;}
+.scene.on{opacity:1;pointer-events:auto;}
+
+/* ===== SCENE 0 — NAME LOCK ===== */
+.lock-card{width:min(360px,90vw);background:linear-gradient(160deg,var(--blue-2),var(--blue-1));
+  border-radius:26px;padding:34px 26px 30px;text-align:center;
+  box-shadow:0 24px 60px rgba(90,147,184,.35),inset 0 1px 0 rgba(255,255,255,.6);
+  border:1px solid rgba(255,255,255,.55);}
+.lock-ic{font-size:40px;margin-bottom:8px;}
+.lock-card h1{font-family:'Dancing Script',cursive;font-size:clamp(24px,7vw,30px);color:var(--blue-deep);margin-bottom:6px;}
+.lock-card p{font-size:13px;color:var(--ink-soft);margin-bottom:20px;font-weight:600;}
+.name-field{width:100%;padding:13px 16px;border-radius:30px;border:2px solid var(--white);
+  background:rgba(255,255,255,.9);font-family:'Quicksand';font-size:16px;font-weight:600;color:var(--ink);
+  text-align:center;outline:none;margin-bottom:14px;}
+.name-field:focus{border-color:var(--blue-deep);}
+.shake{animation:shake .4s;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.go-btn{border:none;cursor:pointer;font-family:'Quicksand';font-weight:700;font-size:15px;color:#fff;
+  padding:13px 38px;border-radius:30px;letter-spacing:.5px;
+  background:linear-gradient(90deg,var(--blue-deep),var(--accent));box-shadow:0 10px 22px rgba(90,147,184,.4);transition:transform .15s;}
+.go-btn:active{transform:scale(.95);}
+.err{font-size:12.5px;color:var(--accent-deep);font-weight:700;height:16px;margin-bottom:8px;opacity:0;transition:opacity .2s;}
+.err.show{opacity:1;}
+
+/* ===== SCENE 1 — LOADING ===== */
+.load-title{font-family:'Dancing Script',cursive;font-size:clamp(30px,9vw,38px);color:var(--blue-deep);
+  text-shadow:0 2px 10px rgba(142,199,230,.5);margin-bottom:24px;}
+.bar-wrap{position:relative;width:min(300px,82vw);}
+.bar-track{width:100%;height:26px;border-radius:30px;background:var(--white);border:2px solid var(--blue-2);
+  overflow:hidden;box-shadow:0 6px 20px rgba(90,147,184,.18),inset 0 2px 4px rgba(0,0,0,.04);}
+.bar-fill{height:100%;width:0%;border-radius:30px;background:linear-gradient(90deg,var(--blue-3),var(--accent));
+  display:flex;align-items:center;justify-content:flex-end;transition:width .15s linear;}
+.bar-pct{font-size:11px;font-weight:700;color:#fff;margin-right:10px;}
+.bar-heart{position:absolute;top:-30px;transform:translateX(-50%);font-size:22px;color:var(--accent);
+  filter:drop-shadow(0 3px 4px rgba(213,107,129,.4));transition:left .15s linear;}
+.load-sub{font-size:12px;font-weight:600;letter-spacing:3px;color:var(--ink-soft);margin-top:24px;}
+
+/* ===== SCENE 2 — ROAD + VAN ===== */
+#road{justify-content:flex-end;padding:0;}
+.road-hint{position:absolute;top:16%;left:50%;transform:translateX(-50%);text-align:center;z-index:5;
+  font-family:'Dancing Script',cursive;font-size:clamp(22px,7vw,28px);color:var(--blue-deep);
+  opacity:0;cursor:pointer;width:90%;}
+.road-hint small{display:block;font-family:'Quicksand';font-size:11px;color:var(--ink-soft);letter-spacing:2px;margin-top:4px;}
+.road-hint.show{animation:hintIn .7s ease forwards, pulse 1.6s ease-in-out .8s infinite;}
+@keyframes hintIn{to{opacity:1}}
+@keyframes pulse{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.07)}}
+
+/* road surface band */
+.ground{position:absolute;left:0;right:0;bottom:0;height:34%;
+  background:linear-gradient(180deg,var(--beige-2),var(--sand));border-top:3px solid #d9c4a0;}
+.dash{position:absolute;left:0;right:0;bottom:calc(34% - 38px);height:5px;
+  background:repeating-linear-gradient(90deg,#cdb892 0 30px,transparent 30px 58px);opacity:.8;}
+.van{position:absolute;bottom:calc(34% - 22px);left:-260px;width:min(230px,62vw);z-index:3;
+  filter:drop-shadow(0 8px 6px rgba(90,147,184,.25));}
+.van.drive{animation:drive 5.5s cubic-bezier(.25,.6,.3,1) forwards;}
+@keyframes drive{0%{left:-260px}70%{left:calc(50% - min(115px,31vw))}100%{left:calc(50% - min(115px,31vw))}}
+.van.bobbing{animation:drive 5.5s cubic-bezier(.25,.6,.3,1) forwards, bob .45s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+.wheel{transform-box:fill-box;transform-origin:center;animation:spin .9s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.letter{position:absolute;font-size:24px;opacity:0;z-index:4;animation:fly 4.5s ease-in forwards;}
+@keyframes fly{0%{opacity:0;transform:translate(0,0) rotate(0)}15%{opacity:.95}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot))}}
+
+/* ===== SCENE 3 — LOVE CARD ===== */
+#final{background:radial-gradient(circle at 50% 40%,rgba(219,238,254,.6),rgba(243,231,211,.85));}
+.love-card{width:min(420px,92vw);background:var(--beige-1);border-radius:22px;border:2px dashed var(--sand);
+  padding:28px 24px 30px;position:relative;box-shadow:0 30px 70px rgba(90,147,184,.3);
+  transform:perspective(900px) rotateY(90deg);opacity:0;max-height:92vh;overflow:auto;}
+.love-card.open{animation:flipIn .9s cubic-bezier(.2,.8,.2,1) forwards;}
+@keyframes flipIn{to{transform:perspective(900px) rotateY(0);opacity:1}}
+.lc-head{font-family:'Dancing Script',cursive;font-size:clamp(26px,8vw,30px);color:var(--accent-deep);text-align:center;margin-bottom:4px;}
+.balloon-gift{display:flex;justify-content:center;margin:4px 0 14px;}
+.balloon-gift svg{width:min(120px,30vw);height:auto;animation:bob2 2.4s ease-in-out infinite;}
+@keyframes bob2{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.msg{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,4.6vw,18px);line-height:1.7;
+  color:var(--ink);text-align:center;margin:4px 4px 20px;}
+.sign{font-family:'Dancing Script',cursive;font-size:21px;color:var(--blue-deep);text-align:right;margin-bottom:22px;}
+.btns{display:flex;gap:16px;justify-content:center;align-items:center;position:relative;min-height:52px;}
+.btn{border:none;cursor:pointer;font-family:'Quicksand';font-weight:700;font-size:15px;padding:12px 26px;border-radius:30px;transition:transform .15s;}
+.btn-yes{color:#fff;background:linear-gradient(90deg,var(--blue-deep),var(--accent));box-shadow:0 10px 22px rgba(90,147,184,.4);}
+.btn-yes:hover{transform:scale(1.06);}
+.btn-no{color:var(--ink-soft);background:var(--white);border:2px solid var(--sand);}
+
+/* ===== YES ===== */
+#yay{position:absolute;inset:0;z-index:50;display:none;align-items:center;justify-content:center;flex-direction:column;
+  text-align:center;padding:24px;background:radial-gradient(circle at 50% 45%,rgba(219,238,254,.96),rgba(243,231,211,.98));}
+#yay h2{font-family:'Dancing Script',cursive;font-size:clamp(34px,11vw,48px);color:var(--accent-deep);
+  margin-bottom:12px;text-shadow:0 3px 12px rgba(213,107,129,.3);line-height:1.2;}
+#yay p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(17px,5vw,20px);color:var(--ink);}
+.confetti{position:absolute;top:-20px;animation:fall linear forwards;}
+@keyframes fall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(540deg);opacity:.9}}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- SCENE 0: NAME LOCK -->
+  <div class="scene on" id="lock">
+    <div class="lock-card" id="lockCard">
+      <div class="lock-ic">🔒</div>
+      <h1>Web này chỉ mở cho một ngừi thuii</h1>
+      <p>Nhập đúng tên của em để vào nhóoo 💙</p>
+      <input class="name-field" id="nameField" placeholder="Tên của em…" autocomplete="off" autocapitalize="words">
+      <div class="err" id="err">Hmmm… chưa đúng rồi, thử lại nha 🥺</div>
+      <button class="go-btn" id="unlockBtn">Mở khóa →</button>
+    </div>
+  </div>
+
+  <!-- SCENE 1: LOADING -->
+  <div class="scene" id="loading">
+    <div class="load-title">Loading Love</div>
+    <div class="bar-wrap">
+      <div class="bar-heart" id="barHeart" style="left:0%">💙</div>
+      <div class="bar-track"><div class="bar-fill" id="barFill"><span class="bar-pct" id="barPct">0%</span></div></div>
+    </div>
+    <div class="load-sub">ĐANG TẢI YÊU THƯƠNG . . .</div>
+  </div>
+
+  <!-- SCENE 2: ROAD -->
+  <div class="scene" id="road">
+    <div class="road-hint" id="roadHint">Một lá thư vừa tới…<small>NHẤN CHỖ NÌ ĐỂ MỞ ✉️</small></div>
+    <div class="ground"></div>
+    <div class="dash"></div>
+    <div class="van" id="van">
+      <svg viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg">
+        <!-- shadow under -->
+        <ellipse cx="140" cy="138" rx="120" ry="7" fill="#5a93b8" opacity=".15"/>
+        <!-- body -->
+        <path d="M18,118
+                 L18,64
+                 Q18,40 46,38
+                 L176,38
+                 Q196,38 210,50
+                 L250,84
+                 Q262,94 262,108
+                 L262,118
+                 Q262,124 256,124
+                 L24,124
+                 Q18,124 18,118 Z"
+              fill="#cdeafb" stroke="#5a93b8" stroke-width="4" stroke-linejoin="round"/>
+        <!-- lower two-tone band -->
+        <path d="M18,96 L262,96 L262,118 Q262,124 256,124 L24,124 Q18,124 18,118 Z"
+              fill="#9ed2ec" stroke="#5a93b8" stroke-width="4" stroke-linejoin="round"/>
+        <!-- windows -->
+        <rect x="34" y="52" width="48" height="34" rx="9" fill="#eaf6fd" stroke="#5a93b8" stroke-width="3"/>
+        <rect x="92" y="52" width="56" height="34" rx="9" fill="#eaf6fd" stroke="#5a93b8" stroke-width="3"/>
+        <rect x="158" y="52" width="40" height="34" rx="9" fill="#eaf6fd" stroke="#5a93b8" stroke-width="3"/>
+        <!-- windshield (sloped) -->
+        <path d="M206,54 L226,56 L246,84 L206,86 Z" fill="#eaf6fd" stroke="#5a93b8" stroke-width="3" stroke-linejoin="round"/>
+        <!-- door seam -->
+        <line x1="120" y1="96" x2="120" y2="120" stroke="#5a93b8" stroke-width="2.5" opacity=".5"/>
+        <!-- heart decal -->
+        <text x="120" y="114" font-size="15" fill="#e58a9a" text-anchor="middle">♡</text>
+        <!-- headlight + bumper -->
+        <circle cx="254" cy="110" r="5" fill="#fff6d8" stroke="#5a93b8" stroke-width="2.5"/>
+        <rect x="244" y="118" width="20" height="7" rx="3" fill="#9ed2ec" stroke="#5a93b8" stroke-width="2.5"/>
+        <!-- WHEELS: outer group positions, inner .wheel spins around its own centre -->
+        <g transform="translate(78,124)">
+          <g class="wheel">
+            <circle r="22" fill="#3f4d57"/>
+            <circle r="21" fill="none" stroke="#2c373f" stroke-width="2"/>
+            <circle r="11" fill="#eaf6fd" stroke="#9bb0bc" stroke-width="2"/>
+            <circle r="2.4" fill="#5a93b8"/>
+            <g stroke="#9bb0bc" stroke-width="2.4" stroke-linecap="round">
+              <line x1="0" y1="-10" x2="0" y2="10"/>
+              <line x1="-10" y1="0" x2="10" y2="0"/>
+              <line x1="-7" y1="-7" x2="7" y2="7"/>
+              <line x1="-7" y1="7" x2="7" y2="-7"/>
+            </g>
+          </g>
+        </g>
+        <g transform="translate(196,124)">
+          <g class="wheel">
+            <circle r="22" fill="#3f4d57"/>
+            <circle r="21" fill="none" stroke="#2c373f" stroke-width="2"/>
+            <circle r="11" fill="#eaf6fd" stroke="#9bb0bc" stroke-width="2"/>
+            <circle r="2.4" fill="#5a93b8"/>
+            <g stroke="#9bb0bc" stroke-width="2.4" stroke-linecap="round">
+              <line x1="0" y1="-10" x2="0" y2="10"/>
+              <line x1="-10" y1="0" x2="10" y2="0"/>
+              <line x1="-7" y1="-7" x2="7" y2="7"/>
+              <line x1="-7" y1="7" x2="7" y2="-7"/>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- SCENE 3: LOVE CARD -->
+  <div class="scene" id="final">
+    <div class="love-card" id="loveCard">
+      <div class="lc-head">Gửi Ngọc Anh,</div>
+      <div class="balloon-gift">
+        <svg viewBox="0 0 140 150" xmlns="http://www.w3.org/2000/svg">
+          <path d="M70 8 C40 8 22 30 40 52 C52 66 70 70 70 70 C70 70 88 66 100 52 C118 30 100 8 70 8 Z" fill="#e58a9a"/>
+          <path d="M70 70 L62 96 M70 70 L78 96" stroke="#d76b81" stroke-width="1.5"/>
+          <rect x="44" y="96" width="52" height="40" rx="4" fill="#fbf6ec" stroke="#e7d3b3" stroke-width="2"/>
+          <rect x="44" y="96" width="52" height="13" rx="3" fill="#b9e0f2"/>
+          <path d="M70 96 L70 136" stroke="#8ec7e6" stroke-width="3"/>
+          <path d="M70 96 C60 86 50 92 70 96 C80 86 90 92 70 96" fill="#8ec7e6"/>
+        </svg>
+      </div>
+      <div class="msg" id="msg"></div>
+      <div class="sign">— From Phong 💙</div>
+      <div class="btns">
+        <button class="btn btn-yes" id="yesBtn">Em đồng ý 💙</button>
+        <button class="btn btn-no" id="noBtn">Để suy nghĩ…</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- YES -->
+  <div id="yay">
+    <h2>iu Chip thúi nhấtttt 💙</h2>
+    <p>Cảm ơn em đã ấn nút đồng ý, Ngọc Anh oiii 🤍</p>
+  </div>
+
+</div>
+
+<script>
+/* ===== Lời nhắn — chỉnh tại đây ===== */
+const MESSAGE =
+  "Anh sợ một ngày nào đó em không còn thấy anh mới mẻ nữa, trong khi anh thì cứ vô thức quen với việc có em bên cạnh mất rồi. Anh biết mình chưa làm được gì nhiều cho em, chưa thể hiện được nhiều, thậm chí chúng mình còn chưa kịp gặp nhau trước lúc em đi… Nhưng dù vậy, anh vẫn muốn hỏi em một điều: em đồng ý làm người yêu của anh nhé?";
+
+/* tên hợp lệ */
+const VALID = ["ngoc anh","le ngoc anh","le thi ngoc anh"];
+function norm(s){
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+          .replace(/đ/g,'d').replace(/\s+/g,' ').trim();
+}
+
+/* bg hearts */
+const stage=document.getElementById('stage');
+const H=['💙','🤍','💧','♡'];
+for(let i=0;i<12;i++){const h=document.createElement('div');h.className='bg-heart';h.textContent=H[i%H.length];
+  h.style.left=Math.random()*100+'%';h.style.fontSize=(12+Math.random()*20)+'px';
+  h.style.animationDuration=(7+Math.random()*8)+'s';h.style.animationDelay=(Math.random()*8)+'s';stage.appendChild(h);}
+
+const show=id=>{document.querySelectorAll('.scene').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');};
+
+/* SCENE 0: lock */
+const nf=document.getElementById('nameField'),err=document.getElementById('err'),lockCard=document.getElementById('lockCard');
+function tryUnlock(){
+  if(VALID.includes(norm(nf.value))){startLoading();}
+  else{err.classList.add('show');lockCard.classList.add('shake');setTimeout(()=>lockCard.classList.remove('shake'),420);}
+}
+document.getElementById('unlockBtn').onclick=tryUnlock;
+nf.addEventListener('keydown',e=>{if(e.key==='Enter')tryUnlock();});
+nf.addEventListener('input',()=>err.classList.remove('show'));
+
+/* SCENE 1: loading */
+function startLoading(){
+  show('loading');
+  const fill=document.getElementById('barFill'),pct=document.getElementById('barPct'),bh=document.getElementById('barHeart');
+  let p=0;
+  const li=setInterval(()=>{
+    p+=Math.random()*4+1.5; if(p>=100){p=100;clearInterval(li);setTimeout(startRoad,500);}
+    fill.style.width=p+'%';pct.textContent=Math.floor(p)+'%';bh.style.left=p+'%';
+  },90);
+}
+
+/* SCENE 2: road */
+function startRoad(){
+  show('road');
+  const van=document.getElementById('van'),road=document.getElementById('road'),hint=document.getElementById('roadHint');
+  van.classList.add('bobbing');
+  // letters flying out of the van after it arrives
+  setTimeout(()=>{
+    for(let i=0;i<14;i++){const e=document.createElement('div');e.className='letter';e.textContent='💌';
+      e.style.left=(46+Math.random()*8)+'%';e.style.bottom='40%';
+      e.style.setProperty('--dx',((Math.random()*2-1)*55)+'vw');
+      e.style.setProperty('--dy',(-(35+Math.random()*45))+'vh');
+      e.style.setProperty('--rot',((Math.random()*2-1)*60)+'deg');
+      e.style.animationDelay=(i*0.16)+'s';road.appendChild(e);}
+  },4200);
+  setTimeout(()=>hint.classList.add('show'),5000);
+  hint.onclick=startFinal;
+}
+
+/* SCENE 3: final */
+function startFinal(){
+  show('final');
+  document.getElementById('msg').textContent=MESSAGE;
+  setTimeout(()=>document.getElementById('loveCard').classList.add('open'),120);
+}
+
+/* No runs away */
+const noBtn=document.getElementById('noBtn');let escaped=false;
+function runAway(){
+  if(!escaped){escaped=true;noBtn.style.position='absolute';}
+  const card=document.getElementById('loveCard').getBoundingClientRect();
+  const x=Math.random()*(card.width-120)-(card.width-120)/2;
+  const y=Math.random()*60-30;
+  noBtn.style.transform=`translate(${x}px,${y}px)`;
+  const t=['Để suy nghĩ…','Hmm…','Bắt được hông 😆','Thử lại nè 💙','Khó lắm~','Đồng ý đi mà 🥺'];
+  noBtn.textContent=t[Math.floor(Math.random()*t.length)];
+}
+noBtn.addEventListener('mouseenter',runAway);
+noBtn.addEventListener('click',runAway);
+noBtn.addEventListener('touchstart',e=>{e.preventDefault();runAway();},{passive:false});
+
+document.getElementById('yesBtn').onclick=()=>{
+  document.getElementById('final').classList.remove('on');
+  const y=document.getElementById('yay');y.style.display='flex';
+  const emo=['💙','🤍','💧','♡','💌','🩵'];
+  for(let i=0;i<70;i++){const c=document.createElement('div');c.className='confetti';c.textContent=emo[i%emo.length];
+    c.style.left=Math.random()*100+'%';c.style.fontSize=(14+Math.random()*22)+'px';
+    c.style.animationDuration=(2.4+Math.random()*2.6)+'s';c.style.animationDelay=(Math.random()*1.2)+'s';y.appendChild(c);}
+};
+
+nf.focus();
+</script>
+</body>
+</html>
